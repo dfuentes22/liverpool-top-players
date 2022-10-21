@@ -3,9 +3,11 @@ $hero-bckgd-color: #c70f2d;
 $light-text: #ffffff;
 $dark-text: #222222;
 $dark-gray-bckgd: #e2e2e2;
-$card-color-bckgd: #fefefe;
+$light-color-bckgd: #fefefe;
 $btn-edit-bckgd: #dddddd;
 $btn-delete-bckgd: #f44336;
+$btn-add-backgd: #1e90ff;
+$btn-save-backgd: #3cb371;
 
 
 * {
@@ -18,6 +20,7 @@ body {
   background-color: $dark-gray-bckgd;
   font-family: $font-stack;
   line-height: 1.5;
+  margin-bottom: 3rem;
 }
 
 #hero {
@@ -27,7 +30,23 @@ body {
   padding: 3rem 1.5rem;
   background: $hero-bckgd-color;
   color: $light-text;
+}
 
+#player-add {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 1.5rem 1rem;
+
+  button {
+    padding: .8rem 1.25rem;
+    margin: .5rem 0;
+    border: none;
+    border-radius: .25rem;
+    cursor: pointer;
+    background-color: $btn-add-backgd;
+    color: $light-text;
+  }
 }
 
 #player-list {
@@ -35,15 +54,15 @@ body {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  padding: 3rem 2rem;
+  padding: 1rem 2rem;
 
   .player-card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     padding: 1.5rem 1.5rem;
-    margin: 1.5rem 1rem;
+    margin: 0 1rem 1.5rem;
     min-width: 200px;
     max-width: 300px;
-    background-color: $card-color-bckgd;
+    background-color: $light-color-bckgd;
     border-radius: .5rem;
 
     .player-name {
@@ -82,6 +101,52 @@ body {
         border-radius: 0 .25rem .25rem 0;
       }
     }
+  }
+
+}
+
+#player-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  #player-form {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    padding: 1.5rem 1.5rem;
+    background-color: $light-color-bckgd;
+    border-radius: .5rem;
+
+    input[type=text] {
+      width: 100%;
+      padding: .75rem 1.25rem;
+      margin: .5rem 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: .25rem;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      color: white;
+      padding: .8rem 1.25rem;
+      margin: .5rem 0;
+      border: none;
+      border-radius: .25rem;
+      cursor: pointer;
+    }
+
+    .btn-add {
+      background-color: $btn-add-backgd;
+    }
+
+    .btn-save {
+      background-color: $btn-save-backgd;
+    }
+
+    .btn-cancel {
+      background-color: $btn-edit-bckgd;
+      color: $dark-text;    }
   }
 }
 
