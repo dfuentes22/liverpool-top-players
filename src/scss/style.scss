@@ -1,0 +1,87 @@
+$font-stack: Arial, Helvetica, sans-serif;
+$hero-bckgd-color: #c70f2d;
+$light-text: #ffffff;
+$dark-text: #222222;
+$dark-gray-bckgd: #e2e2e2;
+$card-color-bckgd: #fefefe;
+$btn-edit-bckgd: #dddddd;
+$btn-delete-bckgd: #f44336;
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+body {
+  background-color: $dark-gray-bckgd;
+  font-family: $font-stack;
+  line-height: 1.5;
+}
+
+#hero {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 1.5rem;
+  background: $hero-bckgd-color;
+  color: $light-text;
+
+}
+
+#player-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+
+  .player-card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    padding: 1.5rem 1.5rem;
+    margin: 1.5rem 1rem;
+    min-width: 200px;
+    max-width: 300px;
+    background-color: $card-color-bckgd;
+    border-radius: .5rem;
+
+    .player-name {
+      margin-bottom: .5rem;
+    }
+  
+    ul {
+      list-style: none;
+      margin-bottom: 1rem;
+      font-size: .85rem;
+    }
+
+    .player-card-actions {
+      display: flex;
+      
+      button {
+        flex-grow: 1;
+        width: 50%;
+        border: none;
+        padding: .5rem 1.5rem;
+        text-align: center;
+        display: inline-block;
+        font-size: .75rem;
+        cursor: pointer;
+      }
+
+      .btn-player-edit {
+        background-color: $btn-edit-bckgd;
+        color: $dark-text;
+        border-radius: .25rem 0 0 .25rem;
+      }
+
+      .btn-player-delete {
+        background-color: $btn-delete-bckgd;
+        color: $light-text;
+        border-radius: 0 .25rem .25rem 0;
+      }
+    }
+  }
+}
+
