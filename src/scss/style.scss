@@ -1,13 +1,13 @@
 $font-stack: Arial, Helvetica, sans-serif;
-$hero-bckgd-color: #c70f2d;
+$hero-bg-color: #c70f2d;
 $light-text: #ffffff;
 $dark-text: #222222;
-$dark-gray-bckgd: #e2e2e2;
-$light-color-bckgd: #fefefe;
-$btn-edit-bckgd: #dddddd;
-$btn-delete-bckgd: #f44336;
-$btn-add-backgd: #1e90ff;
-$btn-save-backgd: #3cb371;
+$dark-gray-bg: #e2e2e2;
+$light-color-bg: #fefefe;
+$btn-edit-bg: #dddddd;
+$btn-delete-bg: #f44336;
+$btn-add-bg: #1e90ff;
+$btn-save-bg: #3cb371;
 
 
 * {
@@ -17,7 +17,7 @@ $btn-save-backgd: #3cb371;
   }
   
 body {
-  background-color: $dark-gray-bckgd;
+  background-color: $dark-gray-bg;
   font-family: $font-stack;
   line-height: 1.5;
   margin-bottom: 3rem;
@@ -28,7 +28,7 @@ body {
   justify-content: center;
   align-items: center;
   padding: 3rem 1.5rem;
-  background: $hero-bckgd-color;
+  background: $hero-bg-color;
   color: $light-text;
 }
 
@@ -44,7 +44,7 @@ body {
     border: none;
     border-radius: .25rem;
     cursor: pointer;
-    background-color: $btn-add-backgd;
+    background-color: $btn-add-bg;
     color: $light-text;
   }
 }
@@ -62,7 +62,7 @@ body {
     margin: 0 1rem 1.5rem;
     min-width: 200px;
     max-width: 300px;
-    background-color: $light-color-bckgd;
+    background-color: $light-color-bg;
     border-radius: .5rem;
 
     .player-name {
@@ -90,13 +90,13 @@ body {
       }
 
       .btn-player-edit {
-        background-color: $btn-edit-bckgd;
+        background-color: $btn-edit-bg;
         color: $dark-text;
         border-radius: .25rem 0 0 .25rem;
       }
 
       .btn-player-delete {
-        background-color: $btn-delete-bckgd;
+        background-color: $btn-delete-bg;
         color: $light-text;
         border-radius: 0 .25rem .25rem 0;
       }
@@ -113,7 +113,7 @@ body {
   #player-form {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     padding: 1.5rem 1.5rem;
-    background-color: $light-color-bckgd;
+    background-color: $light-color-bg;
     border-radius: .5rem;
 
     input[type=text] {
@@ -137,15 +137,15 @@ body {
     }
 
     .btn-add {
-      background-color: $btn-add-backgd;
+      background-color: $btn-add-bg;
     }
 
     .btn-save {
-      background-color: $btn-save-backgd;
+      background-color: $btn-save-bg;
     }
 
     .btn-cancel {
-      background-color: $btn-edit-bckgd;
+      background-color: $btn-edit-bg;
       color: $dark-text;    }
   }
 }
