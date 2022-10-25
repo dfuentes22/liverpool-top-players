@@ -1,5 +1,6 @@
 import { playerCard } from "./components/playerCard.js";
 import { PlayerCard } from "./classes/PlayerCard.js";
+import { Header } from "./components/header.js";
 
 //Variables
 const playerList = document.querySelector('#player-list') as HTMLElement;
@@ -17,7 +18,7 @@ const addCards  = () => {
 addCards();
 
 window.customElements.define('player-card', playerCard);
-
+window.customElements.define('header-component', Header);
 
 //Display a player card element for each card in array
 cards.forEach(card => {

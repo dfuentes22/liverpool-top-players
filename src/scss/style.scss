@@ -1,5 +1,5 @@
 $font-stack: Arial, Helvetica, sans-serif;
-$hero-bg-color: #c70f2d;
+$header-bg-color: #c70f2d;
 $light-text: #ffffff;
 $dark-text: #222222;
 $dark-gray-bg: #e2e2e2;
@@ -23,12 +23,12 @@ body {
   margin-bottom: 3rem;
 }
 
-#hero {
+#header {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 3rem 1.5rem;
-  background: $hero-bg-color;
+  background: $header-bg-color;
   color: $light-text;
 }
 
@@ -56,7 +56,7 @@ body {
   justify-content: center;
   padding: 1rem 2rem;
 
-  .player-card {
+  player-card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     padding: 1.5rem 1.5rem;
     margin: 0 1rem 1.5rem;
@@ -75,34 +75,34 @@ body {
       font-size: .85rem;
     }
 
-    .player-card-actions {
-      display: flex;
-      
-      button {
-        flex-grow: 1;
-        width: 50%;
-        border: none;
-        padding: .5rem 1.5rem;
-        text-align: center;
-        display: inline-block;
-        font-size: .75rem;
-        cursor: pointer;
-      }
 
-      .btn-player-edit {
-        background-color: $btn-edit-bg;
-        color: $dark-text;
-        border-radius: .25rem 0 0 .25rem;
-      }
+  }
+  .player-card-actions {
+    display: flex;
+    
+    button {
+      flex-grow: 1;
+      width: 50%;
+      border: none;
+      padding: .5rem 1.5rem;
+      text-align: center;
+      display: inline-block;
+      font-size: .75rem;
+      cursor: pointer;
+    }
 
-      .btn-player-delete {
-        background-color: $btn-delete-bg;
-        color: $light-text;
-        border-radius: 0 .25rem .25rem 0;
-      }
+    .btn-player-edit {
+      background-color: $btn-edit-bg;
+      color: $dark-text;
+      border-radius: .25rem 0 0 .25rem;
+    }
+
+    .btn-player-delete {
+      background-color: $btn-delete-bg;
+      color: $light-text;
+      border-radius: 0 .25rem .25rem 0;
     }
   }
-
 }
 
 #player-controls {
