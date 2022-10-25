@@ -1,8 +1,8 @@
 $font-stack: Arial, Helvetica, sans-serif;
 $header-bg-color: #c70f2d;
-$light-text: #ffffff;
 $dark-text: #222222;
 $dark-gray-bg: #e2e2e2;
+$light-text: #ffffff;
 $light-color-bg: #fefefe;
 $btn-edit-bg: #dddddd;
 $btn-delete-bg: #f44336;
@@ -105,48 +105,75 @@ body {
   }
 }
 
-#player-controls {
-  display: flex;
+player-form {
+  // padding: 1.5rem 1.5rem;
+  background-color: $light-color-bg;
+
+  input[type=text] {
+    width: 100%;
+    padding: .75rem 1.25rem;
+    margin: .5rem 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: .25rem;
+    box-sizing: border-box;
+  }
+
+  button {
+    width: 100%;
+    color: white;
+    padding: .8rem 1.25rem;
+    margin: .5rem 0;
+    border: none;
+    border-radius: .25rem;
+    cursor: pointer;
+  }
+
+  .btn-add {
+    background-color: $btn-add-bg;
+  }
+
+  .btn-save {
+    background-color: $btn-save-bg;
+  }
+
+  .btn-cancel {
+    background-color: $btn-edit-bg;
+    color: $dark-text;    }
+}
+
+.modal-wrap {
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  position: absolute;
+  display: none;
   justify-content: center;
   align-items: center;
+  background-color: hsla(0%, 0%, 0%, .5);
+}
 
-  #player-form {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    padding: 1.5rem 1.5rem;
-    background-color: $light-color-bg;
-    border-radius: .5rem;
+.modal {
+  background-color: $light-color-bg;
+  border: 0.65 solid $dark-gray-bg;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.25rem 1rem hsla(0%, 0%, 0%, .5);
+}
 
-    input[type=text] {
-      width: 100%;
-      padding: .75rem 1.25rem;
-      margin: .5rem 0;
-      display: inline-block;
-      border: 1px solid #ccc;
-      border-radius: .25rem;
-      box-sizing: border-box;
-    }
+.modal-header {
+  padding: 1px;
+}
 
-    button {
-      width: 100%;
-      color: white;
-      padding: .8rem 1.25rem;
-      margin: .5rem 0;
-      border: none;
-      border-radius: .25rem;
-      cursor: pointer;
-    }
+.modal-body {
+  padding: 10px;
+}
 
-    .btn-add {
-      background-color: $btn-add-bg;
-    }
-
-    .btn-save {
-      background-color: $btn-save-bg;
-    }
-
-    .btn-cancel {
-      background-color: $btn-edit-bg;
-      color: $dark-text;    }
-  }
+.modal-title {
+  border-radius: .5rem .5rem 0 0;
+  margin: -1px;
+  padding: 0.5rem;
+  background-color: $dark-gray-bg;
+  font-size: 1.25rem;
 }
 

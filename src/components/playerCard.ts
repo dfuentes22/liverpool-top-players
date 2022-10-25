@@ -1,6 +1,7 @@
 export class playerCard extends HTMLElement {
     constructor() {
         super();
+        
     }
 
     connectedCallback() {
