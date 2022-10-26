@@ -1,27 +1,22 @@
-export class playerCard extends HTMLElement {
-    constructor() {
-        super();
-        
-    }
+import { CustomButton } from "./button.js";
 
+export class playerCard extends HTMLElement {
+    
+    constructor() {
+        super();    
+    }
+    
     connectedCallback() {
-        const div = document.createElement('div');
-        const btnEdit = document.createElement('button');
-        const btnDel = document.createElement('button');
-        const form = document.querySelectorAll('player-card');
+        const div = document.createElement('div');           
+        const btnEdit = new CustomButton("Edit", "btnCardEdit", "btn-player-edit");
+        const btnDel = new CustomButton("Delete", "btnCardDelete", "btn-player-delete");
+        const btnDelEl = btnDel.render();
+        const btnEditEl = btnEdit.render();
 
         div.classList.add('player-card-actions');
-        btnEdit.classList.add("btn-player-edit")
-        btnDel.classList.add("btn-player-delete")
 
-        btnEdit.textContent = 'Edit';
-        btnDel.textContent = 'Delete';
-
-        this.deleteCard(btnDel);
-
-        btnEdit.addEventListener('click', () => {
-            console.log(form);
-        })
+        this.editCard(btnEditEl);
+        this.deleteCard(btnDelEl);
 
         this.innerHTML = `      
 
@@ -31,19 +26,26 @@ export class playerCard extends HTMLElement {
                 <li>Position: ${this.getAttribute('position')}</li>
                 <li>Goals: ${this.getAttribute('goals')}</li>
                 <li>Assists: ${this.getAttribute('assists')}</li>
-            </ul>    
+            </ul>       
         `;
 
-        div.append(btnEdit);
-        div.append(btnDel)
+        div.append(btnEditEl);
+        div.append(btnDelEl);
         this.append(div);
-
     }
 
     deleteCard(btnDel: HTMLButtonElement) {
         btnDel.addEventListener('click', () => {
             this.remove();
             btnDel.remove();
+        })
+    }
+
+    editCard(btnEdit: HTMLButtonElement) {
+        const  modal = document.querySelector(".modal-wrap") as HTMLElement;
+
+        btnEdit.addEventListener('click', () => {
+            modal.style.display = "flex";
         })
     }
 }
