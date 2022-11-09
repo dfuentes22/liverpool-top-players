@@ -1,20 +1,22 @@
-export class CustomButton{
-    text: string;
-    id: string;
-    className: string;
+import { App } from "../app.js";
 
-    constructor(text:string, id:string, className:string) {
-        this.text = text;
-        this.id = id;
-        this.className = className;
+export class Button {
+    app: App;
+    label: string;
+    el: HTMLButtonElement;
+    clickCb: CallableFunction;
+
+    constructor(label: string, clickCallBack: CallableFunction, app: App, options = {cssClasses: ["btn"]}) {
+        this.app = app;
+        this.label = label;
+        this.el = document.createElement("button");
+        this.clickCb = clickCallBack.bind(this);
+        this.el.addEventListener("click", this.onClick.bind(this));
+        this.el.textContent = this.label;
+        options.cssClasses.forEach((cssClass) => this.el.classList.add(cssClass));
     }
 
-    render() {
-        const btn = document.createElement('button');
-        btn.innerText = this.text;
-        btn.id = this.id
-        btn.classList.add(this.className);
-
-        return btn
+    onClick = (e: Event) => {
+        this.clickCb(e, this);
     }
 }

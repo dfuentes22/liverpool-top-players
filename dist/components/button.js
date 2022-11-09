@@ -1,14 +1,14 @@
-export class CustomButton {
-    constructor(text, id, className) {
-        this.text = text;
-        this.id = id;
-        this.className = className;
-    }
-    render() {
-        const btn = document.createElement('button');
-        btn.innerText = this.text;
-        btn.id = this.id;
-        btn.classList.add(this.className);
-        return btn;
+export class Button {
+    constructor(label, clickCallBack, app, options = { cssClasses: ["btn"] }) {
+        this.onClick = (e) => {
+            this.clickCb(e, this);
+        };
+        this.app = app;
+        this.label = label;
+        this.el = document.createElement("button");
+        this.clickCb = clickCallBack.bind(this);
+        this.el.addEventListener("click", this.onClick.bind(this));
+        this.el.textContent = this.label;
+        options.cssClasses.forEach((cssClass) => this.el.classList.add(cssClass));
     }
 }
