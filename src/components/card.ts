@@ -26,7 +26,7 @@ export class Card {
         this.h4 = document.createElement("h4");
         this.ul = document.createElement("ul");
         this.cardActions = document.createElement("div");
-        this.btnEdit = new Button("edit card", this.app.onShowModal.bind(this.app), app, {cssClasses:["btn-player-edit"]});//update to edit card event
+        this.btnEdit = new Button("edit card", this.app.onEditCard.bind(this.app), app, {cssClasses:["btn-player-edit"]});//update to edit card event
         this.btnDel = new Button("delete card", this.app.onDeleteCard.bind(this.app), app, {cssClasses:["btn-player-delete"]});//update to delete card event
 
         this.el.classList.add("player-card");

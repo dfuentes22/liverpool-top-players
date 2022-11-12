@@ -11,6 +11,7 @@ export class Form {
     inputAssists: HTMLInputElement;
     addCard: Button;
     cancelCard: Button;
+    saveCard: Button;
 
     constructor(app: App) {
         this.app = app;
@@ -21,6 +22,7 @@ export class Form {
         this.inputGoals = document.createElement("input");
         this.inputAssists = document.createElement("input");
         this.addCard = new Button("Add Card", this.app.onAddCard.bind(this.app), app, {cssClasses:["btn-add"]});
+        this.saveCard = new Button("Save Card", this.app.onSaveCard.bind(this.app), app, {cssClasses:["btn-save"]});
         this.cancelCard = new Button("Cancel", this.app.onCancelCard.bind(this.app), app, {cssClasses:["btn-cancel"]});
 
         //placeholders
@@ -37,6 +39,7 @@ export class Form {
         this.el.append(this.inputGoals);
         this.el.append(this.inputAssists);
         this.el.append(this.addCard.el);
+        this.el.append(this.saveCard.el);
         this.el.append(this.cancelCard.el);
     }
 

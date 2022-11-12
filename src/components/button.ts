@@ -16,7 +16,8 @@ export class Button {
         options.cssClasses.forEach((cssClass) => this.el.classList.add(cssClass));
     }
 
-    onClick = (e: Event) => {
+    onClick(e: Event): void {
         this.clickCb(e, this);
+        console.log(this);
     }
 }
