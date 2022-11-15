@@ -1,111 +1,223 @@
 import { Button } from "./components/button.js";
 import { Card } from "./components/card.js";
 import { CardList } from "./components/cardlist.js";
-import { Form } from "./components/form.js";
 import { Modal } from "./components/modal.js";
 export class App {
     constructor(el) {
         this.el = el;
         this.modal = new Modal(this);
-        this.form = new Form(this);
         this.cardList = new CardList(this);
+        this.players = [];
+        this.currentCardIndex = 0;
         this.showBtn = new Button("Add Player", this.onShowModal.bind(this), this, { cssClasses: ["btn-show-modal"] });
         this.addObject(this.showBtn.el);
         this.addObject(this.cardList.el);
         this.addObject(this.modal.elWrap);
     }
+    //===================Sub Routines
     addObject(el) {
         this.el.append(el);
     }
+    clearFormInputs() {
+        //clear form inputs
+        const formInputs = this.modal.form.inputs;
+        Object.keys(formInputs).forEach((key) => {
+            formInputs[key].el.value = "";
+        });
+    }
+    disableButton(btn) {
+        btn.el.disabled = true;
+        btn.el.classList.add("btn-disabled");
+    }
+    enableButton(btn) {
+        btn.el.disabled = false;
+        btn.el.classList.remove("btn-disabled");
+    }
+    checkForEmptyInputFields() {
+        //get form inputs
+        const formInputs = this.modal.form.inputs;
+        //add event listener to check for empty fields, disable buttons if empty
+        Object.keys(formInputs).forEach((key) => {
+            formInputs[key].el.addEventListener("keyup", () => {
+                if (this.allFilled()) {
+                    this.enableButton(this.modal.form.addCard);
+                    this.enableButton(this.modal.form.saveCard);
+                }
+                else {
+                    this.disableButton(this.modal.form.addCard);
+                    this.disableButton(this.modal.form.saveCard);
+                }
+            });
+        });
+    }
+    //==================Functions
+    GetCardAndIndex(e) {
+        //get card of pressed delete button
+        const target = e.target;
+        const card = target.closest('.player-card');
+        const nodes = Array.from(this.cardList.el.children);
+        //index of card in card list
+        const index = nodes.indexOf(card);
+        return [card, index];
+    }
+    isAlpha(inputText) {
+        if (typeof inputText != "string")
+            return false; // only process strings  
+        return /^[A-Za-z]+$/.test(inputText);
+    }
+    isNumeric(inputText) {
+        if (typeof inputText != "string")
+            return false; // only process strings  
+        return /^-?\d+$/.test(inputText);
+    }
+    validateInputs(name, number, position, goals, assists) {
+        let isValid = true;
+        if (!this.isAlpha(name.trim()) || this.isNumeric(name.trim())) {
+            isValid = false;
+        }
+        else if (this.isAlpha(number.toString().trim()) || !this.isNumeric(number.toString().trim())) {
+            isValid = false;
+        }
+        else if (!this.isAlpha(position.trim()) || this.isNumeric(position.trim())) {
+            isValid = false;
+        }
+        else if (this.isAlpha(goals.toString().trim()) || !this.isNumeric(goals.toString().trim())) {
+            isValid = false;
+        }
+        else if (this.isAlpha(assists.toString().trim()) || !this.isNumeric(assists.toString().trim())) {
+            isValid = false;
+        }
+        return isValid;
+    }
+    allFilled() {
+        let filled = true;
+        const formInputs = this.modal.form.inputs;
+        //check that input is not empty
+        Object.keys(formInputs).forEach((key) => {
+            if (formInputs[key].el.value === "") {
+                filled = false;
+            }
+        });
+        return filled;
+    }
+    //==================Events
     onShowModal(e) {
         e.preventDefault();
         //set modal to display flex
         this.modal.elWrap.style.display = "flex";
         //hide save button
         this.modal.form.saveCard.el.style.display = "none";
+        //disable add button on start
+        this.disableButton(this.modal.form.addCard);
     }
     onCancelCard(e) {
         e.preventDefault();
+        //clear form
+        this.clearFormInputs();
         //set modal to display none
         this.modal.elWrap.style.display = "none";
-        //todo: reset inputs
-        this.modal.form.inputName.value = "";
-        this.modal.form.inputNum.value = "";
-        this.modal.form.inputPosition.value = "";
-        this.modal.form.inputGoals.value = "";
-        this.modal.form.inputAssists.value = "";
         //hide save button
         this.modal.form.saveCard.el.style.display = "none";
         //show add button
         this.modal.form.addCard.el.style.display = "inline-block";
     }
-    onAddCard(e) {
+    onAddCard(e, playerData) {
         e.preventDefault();
-        const valName = this.modal.form.inputName.value.trim() || "";
-        const valNum = this.modal.form.inputNum.value.trim() || "";
-        const valPosition = this.modal.form.inputPosition.value.trim() || "";
-        const valGoals = Number(this.modal.form.inputGoals.value.trim()) || 0;
-        const valAssists = Number(this.modal.form.inputAssists.value.trim()) || 0;
-        //clear form inputs
-        this.modal.form.inputName.value = "";
-        this.modal.form.inputNum.value = "";
-        this.modal.form.inputPosition.value = "";
-        this.modal.form.inputGoals.value = "";
-        this.modal.form.inputAssists.value = "";
-        if (valName && valNum && valPosition && valGoals && valAssists) {
-            const newCard = new Card(valName, valNum, valPosition, valGoals, valAssists, this);
-            this.cardList.el.append(newCard.el);
+        //trim values
+        const valName = playerData.name.trim();
+        const valNum = Number(playerData.number.toString().trim());
+        const valPosition = playerData.position.trim();
+        const valGoals = Number(playerData.goals.toString().trim());
+        const valAssists = Number(playerData.assists.toString().trim());
+        const valDetails = playerData.details.trim();
+        if (this.validateInputs(valName, valNum, valPosition, valGoals, valAssists)) {
+            const newCard = new Card(valName, valNum, valPosition, valGoals, valAssists, valDetails, this);
+            //add new card to list
+            this.players.push(newCard);
+            //hide modal
             this.modal.elWrap.style.display = "none";
+            //render cards and clear form
+            this.renderCards();
+            this.clearFormInputs();
         }
         else {
             return;
         }
     }
-    onDeleteCard(e, btn) {
-        var _a;
+    onDeleteCard(e) {
         e.preventDefault();
-        //get card
-        const card = (_a = btn.el.parentNode) === null || _a === void 0 ? void 0 : _a.parentNode;
+        const [card, index] = this.GetCardAndIndex(e);
+        //remove card from player array and from dom
+        this.players.splice(index, 1);
         card.remove();
+        //render updated list;
+        this.renderCards();
     }
-    onEditCard(e, btn) {
-        var _a;
+    onEditCard(e) {
         e.preventDefault();
-        const card = (_a = btn.el.parentNode) === null || _a === void 0 ? void 0 : _a.parentNode;
-        const playerNameEl = card.childNodes[0];
-        const playerNumEl = card.childNodes[1].childNodes[1];
-        const playerPosEl = card.childNodes[1].childNodes[3];
-        const playerGoalsEl = card.childNodes[1].childNodes[5];
-        const playerAssistsEl = card.childNodes[1].childNodes[7];
-        //get text from elements
-        const strPlayerName = playerNameEl.innerText;
-        const strPlayerNum = playerNumEl.innerText.split(" ");
-        const strPlayerPos = playerPosEl.innerText.split(" ");
-        const strPlayerGoals = playerGoalsEl.innerText.split(" ");
-        const strPlayerAssists = playerAssistsEl.innerText.split(" ");
+        const [cardEl, index] = this.GetCardAndIndex(e);
+        const card = this.players[index];
+        const formInputs = this.modal.form.inputs;
         //add text to edit form
-        this.modal.form.inputName.value = strPlayerName;
-        this.modal.form.inputNum.value = strPlayerNum[1];
-        this.modal.form.inputPosition.value = strPlayerPos[1];
-        this.modal.form.inputGoals.value = strPlayerGoals[1];
-        this.modal.form.inputAssists.value = strPlayerAssists[1];
+        formInputs.name.el.value = card.playerName;
+        formInputs.number.el.value = `${card.playerNum}`;
+        formInputs.position.el.value = card.playerPosition;
+        formInputs.goals.el.value = `${card.playerGoals}`;
+        formInputs.assists.el.value = `${card.playerAssists}`;
+        formInputs.details.el.value = card.playerDetails;
+        console.log(cardEl);
         //hide add button
         this.modal.form.addCard.el.style.display = "none";
+        this.modal.form.saveCard.el.disabled = true;
+        this.modal.form.saveCard.el.classList.add("btn-disabled");
         //show modal
         this.onShowModal(e);
         //show save button
         this.modal.form.saveCard.el.style.display = "inline-block";
+        this.currentCardIndex = index;
     }
-    onSaveCard(e, btn, card) {
+    onSaveCard(e) {
         e.preventDefault();
-        console.log(btn);
-        console.log(card);
-        const valName = this.modal.form.inputName.value.trim() || "";
-        const valNum = this.modal.form.inputNum.value.trim() || "";
-        const valPosition = this.modal.form.inputPosition.value.trim() || "";
-        const valGoals = Number(this.modal.form.inputGoals.value.trim()) || 0;
-        const valAssists = Number(this.modal.form.inputAssists.value.trim()) || 0;
-        console.log(valName, valNum, valPosition, valGoals, valAssists);
+        const card = this.players[this.currentCardIndex];
+        const formInputs = this.modal.form.inputs;
+        //updated card
+        card.playerName = formInputs.name.el.value.trim();
+        card.playerNum = Number(formInputs.number.el.value.trim());
+        card.playerPosition = formInputs.position.el.value.trim();
+        card.playerGoals = Number(formInputs.goals.el.value.trim());
+        card.playerAssists = Number(formInputs.assists.el.value.trim());
+        card.playerDetails = formInputs.details.el.value.trim();
+        //if valid inputs update card
+        if (this.validateInputs(card.playerName, card.playerNum, card.playerPosition, card.playerGoals, card.playerAssists)) {
+            //Update card element
+            card.h4.textContent = card.playerName;
+            card.ul.innerHTML = `
+            <li>Num: ${card.playerNum}</li>
+            <li>Position: ${card.playerPosition}</li>
+            <li>Goals: ${card.playerGoals}</li>
+            <li>Assists: ${card.playerAssists}</li>
+            <li>Details: ${card.playerDetails}</li>
+            `;
+            //set modal to display none
+            this.modal.elWrap.style.display = "none";
+            this.modal.form.saveCard.el.style.display = "none";
+            this.modal.form.addCard.el.style.display = "inline-block";
+            this.clearFormInputs();
+            this.renderCards();
+        }
+        else {
+            return false;
+        }
+    }
+    renderCards() {
+        this.players.forEach(player => {
+            this.cardList.el.append(player.el);
+        });
+    }
+    Init() {
+        this.renderCards();
+        this.checkForEmptyInputFields();
     }
 }
 const app = new App(document.querySelector("#app"));
+app.Init();

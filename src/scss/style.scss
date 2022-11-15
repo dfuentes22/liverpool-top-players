@@ -121,6 +121,16 @@ form {
     box-sizing: border-box;
   }
 
+  textarea{
+    width: 100%;
+    padding: 0.75rem 1.25rem;
+    margin: 0.5rem 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+    box-sizing: border-box;
+  }
+
   button {
     width: 100%;
     color: white;
@@ -179,3 +189,7 @@ form {
   font-size: 1.25rem;
 }
 
+.btn-disabled {
+  opacity: .1;
+  cursor: default;
+}

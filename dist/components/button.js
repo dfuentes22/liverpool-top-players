@@ -9,7 +9,6 @@ export class Button {
         options.cssClasses.forEach((cssClass) => this.el.classList.add(cssClass));
     }
     onClick(e) {
-        this.clickCb(e, this);
-        console.log(this);
+        this.clickCb(e);
     }
 }

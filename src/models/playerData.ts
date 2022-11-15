@@ -1,7 +1,8 @@
 export type PlayerData = {
     name: string;
-    number: string;
+    number: number;
     position: string;
     goals: number;
     assists: number;
+    details: string;
 }

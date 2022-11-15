@@ -17,7 +17,6 @@ export class Button {
     }
 
     onClick(e: Event): void {
-        this.clickCb(e, this);
-        console.log(this);
+        this.clickCb(e);
     }
 }
